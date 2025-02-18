@@ -1,21 +1,33 @@
 import express from 'express';
 const app = express();
-const PORT = process.env.PORT || 3000; // Corrected variable name
-app.get("/" ,(req ,res)=>{
-  res.status(201).send({msg:"helloworld"});
+const PORT = process.env.PORT || 3000;
+
+// Home route
+app.get("/", (req, res) => {
+  res.status(201).send({ msg: "helloworld" });
 });
-app.get("/api/users",(req ,res)=>{
+
+// Users route
+app.get("/api/users", (req, res) => {
   res.send([
-    {id:1 ,username:"timothy" ,displayname:"timothy"},
-    {id:1 ,username:"thaddeaus" ,displayname:"thaddeaus"},
-    {id:1 ,username:"esthy",displayname:"esthy"}
+    { id: 1, username: "timothy", displayname: "timothy" },
+    { id: 2, username: "thaddeaus", displayname: "thaddeaus" },
+    { id: 3, username: "esthy", displayname: "esthy" }
   ]);
 });
-app.get("/api/users",(req ,res)=>{
-  res.send([{id:123 ,name:"chicken breast ,price:12.99"}]);
+
+// New route (assumed for something else like products or items)
+app.get("/api/items", (req, res) => {
+  res.send([{ id: 123, name: "chicken breast", price: 12.99 }]);
 });
-app.listen(PORT, () => { // Use PORT instead of port
+
+// Specific user by ID
+app.get("/api/users/:id", (req, res) => {
+  console.log(req.params); // Corrected 'request' to 'req'
+  // You can handle the ID here (e.g., fetch user by ID)
+  res.send({ msg: `User ID is ${req.params.id}` });
+});
+
+app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
-
-
