@@ -13,9 +13,20 @@ app.get("/", (req, res) => {
   res.status(200).send({ msg: "helloworld" });  // Changed to 200 for OK status
 });
 
-// Users route - Return all users
+// Users route with optional query parameters for filtering
 app.get("/api/users", (req, res) => {
-  res.send(mockusers);  // Return all users from the mock data
+  const { username, displayname } = req.query;  // Access query params from the request
+
+  // Filter users based on query parameters
+  const filteredUsers = mockusers.filter(user => {
+    return (
+      (username ? user.username.toLowerCase().includes(username.toLowerCase()) : true) &&
+      (displayname ? user.displayname.toLowerCase().includes(displayname.toLowerCase()) : true)
+    );
+  });
+
+  // Return filtered users or all users if no filters are applied
+  res.send(filteredUsers);
 });
 
 // Items route
