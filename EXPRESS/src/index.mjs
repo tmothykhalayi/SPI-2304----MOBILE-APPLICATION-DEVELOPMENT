@@ -2,6 +2,9 @@ import express from "express";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware to parse JSON bodies
+app.use(express.json()); // This will allow us to handle JSON bodies in POST requests
+
 // Mock users data
 const mockusers = [
   { id: 1, username: 'timoty', displayname: 'timoty' },
@@ -36,6 +39,25 @@ app.get('/api/users', (req, res) => {
 
   // If no query parameters, return all users
   res.send(mockusers);
+});
+
+// POST request to add a new user
+app.post('/api/users', (req, res) => {
+  const { username, displayname } = req.body; // Extract data from the body
+
+  if (!username || !displayname) {
+    return res.status(400).send('Username and displayname are required'); // Send error if data is missing
+  }
+
+  // Create a new user object
+  const newUser = {
+    id: mockusers.length + 1, // Simple ID generation
+    username,
+    displayname
+  };
+
+  mockusers.push(newUser); // Add the new user to the mockusers array
+  return res.status(201).send(newUser); // Respond with the new user and a 201 status code
 });
 
 // Route to get all products
