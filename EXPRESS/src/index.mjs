@@ -89,3 +89,19 @@ app.get('/api/users/:id', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+app.put('/api/users/:id', (req, res) => {
+  const {
+    body,
+    params: { id }
+  } =req;
+  const parseId = parseInt(id);
+  if (isNaN(parseId)) {
+    return res.status(400).send('Invalid id');
+    const finduser = mockusers.find(user => user.id === parseId);
+    if(finduser ===-1)return res.status(404).send('User not found');
+    mockusers[finduser] = { id: parseId, ...body};
+    return res.sendstatus(200);
+  }
+
+});
