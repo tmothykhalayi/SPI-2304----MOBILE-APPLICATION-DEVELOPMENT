@@ -90,35 +90,57 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
+//put request to update user
 app.put('/api/users/:id', (req, res) => {
-  const {
-    body,
-    params: { id }
-  } =req;
+  const { body, params: { id } } = req;
   const parseId = parseInt(id);
+
   if (isNaN(parseId)) {
     return res.status(400).send('Invalid id');
-    const finduser = mockusers.find(user => user.id === parseId);
-    if(finduser ===-1)return res.status(404).send('User not found');
-    mockusers[finduser] = { id: parseId, ...body};
-    return res.sendstatus(200);
   }
 
+  const userIndex = mockusers.findIndex(user => user.id === parseId);
+  if (userIndex === -1) {
+    return res.status(404).send('User not found');
+  }
+
+  mockusers[userIndex] = { id: parseId, ...body };
+  return res.status(200).send(mockusers[userIndex]);
 });
+
+//patch request
 app.patch('/api/users/:id', (req, res) => {
-  const {
-    body,
-    params: { id }
-  } =req;
+  const { body, params: { id } } = req;
   const parseId = parseInt(id);
+
   if (isNaN(parseId)) {
     return res.status(400).send('Invalid id');
-    const finduser = mockusers.find(user => user.id === parseId);
-    if(finduser ===-1)return res.status(404).send('User not found');
-    mockusers[finduser] = { id: parseId, ...body};
-    return res.sendstatus(200);
-    mockusers[finduser] = { ...mockusers[finduser], ...body};
-    return res.sendstatus(200);
-    
   }
+
+  const userIndex = mockusers.findIndex(user => user.id === parseId);
+  if (userIndex === -1) {
+    return res.status(404).send('User not found');
+  }
+
+  // Update the user properties that are passed in the body
+  mockusers[userIndex] = { ...mockusers[userIndex], ...body };
+  return res.status(200).send(mockusers[userIndex]);
+});
+
+//delete request
+app.delete('/api/users/:id', (req, res) => {
+  const { params: { id } } = req;
+  const parseId = parseInt(id);
+
+  if (isNaN(parseId)) {
+    return res.status(400).send('Invalid id');
+  }
+
+  const userIndex = mockusers.findIndex(user => user.id === parseId);
+  if (userIndex === -1) {
+    return res.status(404).send('User not found');
+  }
+
+  mockusers.splice(userIndex, 1); // Remove the user from the array
+  return res.status(200).send({ message: 'User deleted successfully' });
 });
