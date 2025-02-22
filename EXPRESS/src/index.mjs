@@ -4,6 +4,14 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json()); // This will allow us to handle JSON bodies in POST requests
 
+//middleware to log requests
+const loggingmiddleware = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+app.use(loggingMiddleware);
+
 const PORT = process.env.PORT || 3000;
 
 // Mock users data
