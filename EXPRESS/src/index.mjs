@@ -1,9 +1,10 @@
 import express from "express";
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON bodies
 app.use(express.json()); // This will allow us to handle JSON bodies in POST requests
+
+const PORT = process.env.PORT || 3000;
 
 // Mock users data
 const mockusers = [
