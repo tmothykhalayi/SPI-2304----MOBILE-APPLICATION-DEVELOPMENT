@@ -105,3 +105,20 @@ app.put('/api/users/:id', (req, res) => {
   }
 
 });
+app.patch('/api/users/:id', (req, res) => {
+  const {
+    body,
+    params: { id }
+  } =req;
+  const parseId = parseInt(id);
+  if (isNaN(parseId)) {
+    return res.status(400).send('Invalid id');
+    const finduser = mockusers.find(user => user.id === parseId);
+    if(finduser ===-1)return res.status(404).send('User not found');
+    mockusers[finduser] = { id: parseId, ...body};
+    return res.sendstatus(200);
+    mockusers[finduser] = { ...mockusers[finduser], ...body};
+    return res.sendstatus(200);
+    
+  }
+});
