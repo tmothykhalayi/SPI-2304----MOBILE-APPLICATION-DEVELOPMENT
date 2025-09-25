@@ -1,0 +1,26 @@
+/* Removed empty ruleset */
+* {
+    font-family: monospace;
+}
+body{
+    font-size: 22px;
+    color: blue;
+    background-color: black;
+    border-radius: 3px solid red;
+
+
+}
+
+.gray {
+    color:bisque;
+    color: brown;
+    text-transform: uppercase;
+    background-color: gold;
+    
+    
+
+}
+
+#random {
+    font-style: italic;
+}
